@@ -1,0 +1,35 @@
+.weather {
+    position: absolute;
+    width: 220px;
+    height: 122px;
+    left: 36px;
+    top: 33px;
+
+    background: #DAC1AE;
+    box-shadow: 0 0 10px 1px rgba(173, 169, 165, 0.5);
+    border-radius: 23px;
+}
+
+.currency {
+    position: absolute;
+    width: 148px;
+    height: 85px;
+    left: 36px;
+    top: 204px;
+
+    background: #DAC1AE;
+    box-shadow: 0 0 10px 1px rgba(173, 169, 165, 0.5);
+    border-radius: 10px;
+}
+
+.update {
+    position: absolute;
+    width: 63px;
+    height: 63px;
+    left: 846px;
+    top: 33px;
+
+    background: #DAC1AE;
+    box-shadow: 0 0 10px 1px rgba(173, 169, 165, 0.5);
+    border-radius: 10px;
+}
