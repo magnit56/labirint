@@ -14,7 +14,11 @@ class NewsController extends Controller
     {
         $properties = $showNewsRequest->validated();
         try {
-            $article = new News($properties['id']);
+            if (isset($properties['id'])) {
+                $article = News::get($properties['id']);
+            } else {
+                $article = News::search($properties['q']);
+            }
         } catch (\Exception $exception) {
             abort(404);
         }
@@ -24,8 +28,12 @@ class NewsController extends Controller
     public function store(StoreNewsRequest $storeNewsRequest)
     {
         $properties = $storeNewsRequest->validated();
-        $article = News::create($properties['title'], $properties['announcement'], $properties['body'], $properties['tags'] ?? '');
-        return 'success';
+        try {
+            News::create($properties['title'], $properties['announcement'], $properties['body'], $properties['tags'] ?? '');
+            return 'success';
+        } catch (\Exception $exception) {
+            return 'error';
+        }
     }
 
     public function destroy(DestroyNewsRequest $destroyNewsRequest)

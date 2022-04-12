@@ -14,7 +14,8 @@ class ShowNewsRequest extends FormRequest
     public function rules()
     {
         return [
-            'id' => 'required|integer',
+            'id' => 'required_without:q|integer',
+            'q' => 'required_without:id|string',
         ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use phpDocumentor\Reflection\Types\False_;
 
 //Пришлось сделать кастомную модель, у ларавелевской другой подход - active record
 class News
@@ -29,6 +30,23 @@ class News
         $this->body = $article->body;
         $this->pubDate = Carbon::createFromFormat('Y-m-d H:i:s', $article->pubDate)->format('d.m.Y H:i:s');
         $this->tags = $tags->pluck('name');
+    }
+
+    public static function get($id)
+    {
+        return new static($id);
+    }
+
+    public static function search($q)
+    {
+        $exists = DB::table('news')->where('title', 'like', "%{$q}%")->exists();
+        if (!$exists) {
+            // лучше какую-нибудь кастомную ошибку вывести типо ArticleNotFound
+            // для простоты обычный Exception выбрасываем
+            throw new \Exception('Not found');
+        }
+        $id = DB::table('news')->where('title', 'like', "%{$q}%")->first()->id;
+        return new static($id);
     }
 
     public static function create($title, $announcement, $body, $tagString)
